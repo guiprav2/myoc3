@@ -5,6 +5,10 @@ class OCProfile {
   constructor() {
     let [state, post] = useCtrl();
     Object.assign(this, { state, post });
+
+    let url = new URL(location.href);
+    this.id = url.searchParams.get('id');
+    this.id ? post('profile.load', this.id) : post('profile.reset');
   }
 
   render = () => d.html`
@@ -20,13 +24,16 @@ class OCProfile {
             <button class="nf nf-md-magnify"></button>
           </div>
         </div>
-        <input class="text-center text-[#FF77A8] font-xl my-3 outline-none mx-auto block" ${{ value: () => this.state.profile.name }}>
+        <input class="text-center text-[#FF77A8] font-xl my-3 outline-none mx-auto block bg-transparent" ${{
+          value: d.binding({ get: () => this.state.profile.name, set: x => this.state.profile.name = x }),
+          placeholder: 'OC Name',
+        }}>
         <div class="w-min ml-auto mr-4 text-xl -mt-9 mb-3 text-[#A7A7A7] group relative">
           <button class="nf nf-md-dots_vertical"></button>
           <div class="absolute pt-2 right-0 hidden group-hover:block">
             <div class="text-sm shadow-xl border border-[#00000010] bg-white rounded overflow-hidden whitespace-nowrap text-center">
-              <a class="px-3 py-2 bg-white border-b border-[#00000010] block hover:bg-[#FFA1C3] hover:text-white">Save</a>
-              <a class="px-3 py-2 bg-white block hover:bg-[#FFA1C3] hover:text-white">Cancel</a>
+              <a class="px-3 py-2 bg-white border-b border-[#00000010] block hover:bg-[#FFA1C3] hover:text-white" ${{ onClick: () => this.post('profile.save') }}>Save</a>
+              <a class="px-3 py-2 bg-white block hover:bg-[#FFA1C3] hover:text-white" ${{ onClick: () => this.post('profile.cancelEdit') }}>Cancel</a>
             </div>
           </div>
         </div>
@@ -40,7 +47,10 @@ class OCProfile {
         </div>
         <div class="m-4 flex flex-col">
           <div class="text-[#2D2829] border-b border-[#E3D9D9BD] pb-1">Story</div>
-          <textarea class="mt-3 text-[#454545] mx-3 block outline-none px-3 py-2 h-32">Text...</textarea>
+          <textarea class="mt-3 text-[#454545] mx-3 block outline-none px-3 py-2 h-32" ${{
+            value: d.binding({ get: () => this.state.profile.story, set: x => this.state.profile.story = x}),
+            placeholder: 'Text...',
+          }}></textarea>
         </div>
         ${d.if(() => this.state.profile.bio, d.html`
           <div>

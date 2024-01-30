@@ -7,7 +7,7 @@ let state = {};
 
 let sections = {
   auth: new AuthCtrl(),
-  profile: new ProfileCtrl(),
+  profile: new ProfileCtrl(post),
 };
 
 for (let [k, v] of Object.entries(sections)) { state[k] = v.state }
