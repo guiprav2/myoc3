@@ -1,3 +1,4 @@
+import LoadingDialog from '../components/dialogs/LoadingDialog.js';
 import UploadDialog from '../components/dialogs/UploadDialog.js';
 import rprofiles from '../repositories/ProfileRepository.js';
 import { selectFile, showModal } from '../other/util.js';
@@ -11,6 +12,7 @@ class ProfileCtrl {
     bio: null,
     physical: null,
     gallery: null,
+    loading: false,
   };
 
   constructor(post) { this.post = post }
@@ -22,12 +24,20 @@ class ProfileCtrl {
       this.state.avatar = null;
       this.state.story = '';
       this.state.bio = this.state.physical = this.state.gallery = null;
+      this.state.loading = false;
     },
 
     load: async x => {
       this.post('profile.reset');
       this.state.id = x;
-      Object.assign(this.state, await rprofiles.load(x));
+
+      try {
+        this.state.loading = true;
+        showModal(d.el(LoadingDialog, { done: () => !this.state.loading }));
+        Object.assign(this.state, await rprofiles.load(x));
+      } finally {
+        this.state.loading = false;
+      }
     },
 
     save: async () => {
@@ -61,6 +71,13 @@ class ProfileCtrl {
     },
 
     createGallery: () => this.state.gallery = [],
+
+    avatarUpload: async () => {
+      let file = await selectFile('image/*');
+      let [btn, detail] = await showModal(d.el(UploadDialog, { file }));
+      if (btn !== 'ok') { return }
+      this.state.avatar = detail;
+    },
 
     galleryUpload: async () => {
       let file = await selectFile('image/*');

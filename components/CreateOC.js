@@ -39,10 +39,12 @@ class OCProfile {
         </div>
         <div class="relative flex justify-center items-center aspect-square w-32 overflow-hidden mx-auto rounded-full bg-[#CBCBCB]">
           ${d.if(() => this.state.profile.avatar, d.html`
-            <img class="h-full object-cover" ${{ src: () => this.state.profile.avatar }}>
-            <button class="absolute left-0 right-0 top-0 bottom-0 w-full text-center text-neutral-200 bg-[#00000075] opacity-0 hover:opacity-100">change</button>
+            <img class="w-full h-full object-cover" ${{ src: () => this.state.profile.avatar }}>
+            <button class="absolute left-0 right-0 top-0 bottom-0 w-full text-center text-neutral-200 bg-[#00000075] opacity-0 hover:opacity-100" ${{
+              onClick: () => this.post('profile.avatarUpload'),
+            }}>change</button>
           `, d.html`
-            <button class="absolute left-0 right-0 top-0 bottom-0 w-full nf nf-fa-plus text-white"></button>
+            <button class="absolute left-0 right-0 top-0 bottom-0 w-full nf nf-fa-plus text-white" ${{ onClick: () => this.post('profile.avatarUpload') }}></button>
           `)}
         </div>
         <div class="m-4 flex flex-col">

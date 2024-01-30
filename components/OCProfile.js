@@ -24,7 +24,7 @@ class OCProfile {
             <button class="nf nf-md-magnify"></button>
           </div>
         </div>
-        <div class="text-center text-[#FF77A8] font-xl my-3">${d.text(() => this.state.profile.name)}</div>
+        <div class="text-center text-[#FF77A8] font-xl my-3">${d.text(() => this.state.profile.name || 'OC Name')}</div>
         <div class="w-min ml-auto mr-4 text-xl -mt-9 mb-3 text-[#A7A7A7] group relative">
           <button class="nf nf-md-dots_vertical"></button><div class="absolute pt-2 right-0 hidden group-hover:block">
             <div class="text-sm shadow-xl border border-[#00000010] bg-white rounded overflow-hidden whitespace-nowrap text-center">
