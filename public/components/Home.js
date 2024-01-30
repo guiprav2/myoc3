@@ -5,6 +5,7 @@ class Home {
   constructor() {
     let [state, post] = useCtrl();
     Object.assign(this, { state, post });
+    post('home.reset');
     post('home.load');
   }
 
@@ -23,13 +24,25 @@ class Home {
         </div>
       </div>
       <div class="bg-white flex justify-around text-xs p-2 md:p-3 md:text-sm">
-        <div class="bg-[#FFA1C3] rounded-lg px-3 text-white">Recommended</div>
-        <div class="rounded-lg px-3 text-[#A7A7A7]">Collection</div>
-        <div class="rounded-lg px-3 text-[#A7A7A7]">My OC</div>
-        <div class="rounded-lg px-3 text-[#A7A7A7]">Gallery</div>
+        <button ${{
+          class: ['rounded-lg px-3', () => this.state.home.currentTab === 'recommended' && 'text-white bg-[#FFA1C3]'],
+          onClick: () => this.post('home.changeTab', 'recommended'),
+        }}>Recommended</button>
+        <button ${{
+          class: ['rounded-lg px-3', () => this.state.home.currentTab === 'collection' && 'text-white bg-[#FFA1C3]'],
+          onClick: () => this.post('home.changeTab', 'collection'),
+        }}>Collection</button>
+        <button ${{
+          class: ['rounded-lg px-3', () => this.state.home.currentTab === 'myoc' && 'text-white bg-[#FFA1C3]'],
+          onClick: () => this.post('home.changeTab', 'myoc'),
+        }}>My OC</button>
+        <button ${{
+          class: ['rounded-lg px-3', () => this.state.home.currentTab === 'gallery' && 'text-white bg-[#FFA1C3]'],
+          onClick: () => this.post('home.changeTab', 'gallery'),
+        }}>Gallery</button>
       </div>
       <div class="grid grid-cols-2 p-4 gap-1 md:grid-cols-4">
-        ${d.map(() => this.state.home.feed, x => d.html`
+        ${d.map(() => this.state.home.list, x => d.html`
           <div class="aspect-square bg-[#CBCBCB] relative flex flex-col justify-center">
             <img class="w-full h-full object-cover" ${{ src: () => x.imgUrl }}>
             <button ${{
