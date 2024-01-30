@@ -20,16 +20,16 @@ class SubmitWorkDialog {
       </div>
       <div class="max-w-xs mx-auto">
         <div ${{
-          class: ['aspect-square bg-white flex justify-center items-center max-w-sm mx-auto mb-4 my-10', () => !this.state.submitWork.data.cover && 'cursor-pointer'],
-          onClick: () => !this.state.submitWork.data.cover && this.post('submitWork.uploadCover'),
+          class: ['aspect-square bg-white flex justify-center items-center max-w-sm mx-auto mb-4 my-10', () => !this.state.submitWork.data.url && 'cursor-pointer'],
+          onClick: () => !this.state.submitWork.data.url && this.post('submitWork.upload'),
         }}>
-          ${d.if(() => !this.state.submitWork.data.cover, d.html`
+          ${d.if(() => !this.state.submitWork.data.url, d.html`
             <div class="nf nf-fa-plus font-2xl text-[#FFA1C3]"></div>
           `, d.html`
-            <img class="w-full h-full object-cover" ${{ src: () => this.state.submitWork.data.cover + '?w=800' }}>
+            <img class="w-full h-full object-cover" ${{ src: () => this.state.submitWork.data.url + '?w=800' }}>
           `)}
         </div>
-        <button class="nf nf-fa-trash w-min ml-auto text-[#FFA1C3] block mb-10" ${{ onClick: () => this.post('submitWork.clearCover') }}></button>
+        <button class="nf nf-fa-trash w-min ml-auto text-[#FFA1C3] block mb-10" ${{ onClick: () => this.post('submitWork.clear') }}></button>
       </div>
       <div class="mx-10 my-8">
         <div class="text-sm text-[#FA3973]">Title</div>

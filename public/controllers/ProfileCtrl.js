@@ -31,6 +31,7 @@ class ProfileCtrl {
     load: async x => {
       this.post('profile.reset');
       this.state.id = x;
+      if (!x) { return }
 
       try {
         this.state.loading = true;

@@ -85,7 +85,7 @@ class OCProfile {
             <div class="bg-[#FFA1C3] text-white px-4 py-1">Gallery</div>
             <div class="p-4 grid grid-cols-2 gap-1 md:grid-cols-4 lg:grid-cols-6">
               ${d.map(() => this.state.profile.gallery, x => d.html`
-                <img class="w-full h-full aspect-square object-cover bg-[#CBCBCB]" ${{ src: () => x.cover + '?w=400', onClick: () => this.post('profile.submitWork', x) }}>
+                <img class="w-full h-full aspect-square object-cover bg-[#CBCBCB]" ${{ src: () => x.url + '?w=400', onClick: () => this.post('profile.submitWork', x) }}>
               `)}
               <button class="flex justify-center items-center aspect-square text-white bg-[#CBCBCB]" ${{ onClick: () => this.post('profile.submitWork') }}>
                 <i class="nf nf-fa-plus"></i>
