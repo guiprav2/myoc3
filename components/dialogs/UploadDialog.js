@@ -30,7 +30,7 @@ class UploadDialog {
           <button type="submit" value="ok" ${{
             class: ['px-3 py-1 bg-[#4f46e5] rounded flex-1', () => !this.state.upload.url && 'opacity-50'],
             disabled: () => !this.state.upload.url,
-            onClick: () => this.close('ok', this.state.upload.url),
+            onClick: () => this.close('ok', this.state.upload.url.replace('guiprav.com', 'imgix.net')),
           }}>OK</button>
           <button class="px-3 py-1 rounded flex-1 bg-[#2b2d31]" value="cancel" ${{
             onClick: () => this.post('upload.reset'),

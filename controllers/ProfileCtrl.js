@@ -1,4 +1,5 @@
 import LoadingDialog from '../components/dialogs/LoadingDialog.js';
+import SubmitWorkDialog from '../components/dialogs/SubmitWorkDialog.js';
 import UploadDialog from '../components/dialogs/UploadDialog.js';
 import rprofiles from '../repositories/ProfileRepository.js';
 import { selectFile, showModal } from '../other/util.js';
@@ -76,15 +77,13 @@ class ProfileCtrl {
       let file = await selectFile('image/*');
       let [btn, detail] = await showModal(d.el(UploadDialog, { file }));
       if (btn !== 'ok') { return }
-      this.state.avatar = detail.replace('guiprav.com', 'imgix.net');
+      this.state.avatar = detail;
     },
 
-    galleryUpload: async () => {
-      let file = await selectFile('image/*');
-      let [btn, detail] = await showModal(d.el(UploadDialog, { file }));
+    submitWork: async data => {
+      let [btn, detail] = await showModal(d.el(SubmitWorkDialog, { data }));
       if (btn !== 'ok') { return }
-      this.state.gallery ??= [];
-      this.state.gallery.push(detail.replace('guiprav.com', 'imgix.net'));
+      data ? this.state.gallery[this.state.gallery.indexOf(data)] = detail : this.state.gallery.push(detail);
     },
   };
 }

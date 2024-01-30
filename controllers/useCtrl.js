@@ -1,5 +1,6 @@
 import AuthCtrl from './AuthCtrl.js';
 import ProfileCtrl from './ProfileCtrl.js';
+import SubmitWorkCtrl from './SubmitWorkCtrl.js';
 import UploadCtrl from './UploadCtrl.js';
 import d from '../other/dominant.js';
 import debounce from 'https://cdn.skypack.dev/debounce';
@@ -10,6 +11,7 @@ let sections = {
   auth: new AuthCtrl(),
   profile: new ProfileCtrl(post),
   upload: new UploadCtrl(post),
+  submitWork: new SubmitWorkCtrl(post),
 };
 
 for (let [k, v] of Object.entries(sections)) { state[k] = v.state }

@@ -12,7 +12,7 @@ class OCProfile {
   }
 
   render = () => d.html`
-    <div class="bg-neutral-200">
+    <div class="relative bg-neutral-200">
       <div class="mx-auto max-w-5xl shadow-xl bg-neutral-100 min-h-screen flow-root">
         <div class="bg-[#2D2829] flex justify-between text-[#FA3973C2] p-4 items-center">
           <div class="flex gap-3 items-center">
@@ -85,9 +85,9 @@ class OCProfile {
             <div class="bg-[#FFA1C3] text-white px-4 py-1">Gallery</div>
             <div class="p-4 grid grid-cols-2 gap-1 md:grid-cols-4 lg:grid-cols-6">
               ${d.map(() => this.state.profile.gallery, x => d.html`
-                <img class="h-full aspect-square object-contain bg-[#CBCBCB]" ${{ src: x + '?w=400' }}>
+                <img class="w-full h-full aspect-square object-cover bg-[#CBCBCB]" ${{ src: () => x.cover + '?w=400', onClick: () => this.post('profile.submitWork', x) }}>
               `)}
-              <button class="flex justify-center items-center aspect-square text-white bg-[#CBCBCB]" ${{ onClick: () => this.post('profile.galleryUpload') }}>
+              <button class="flex justify-center items-center aspect-square text-white bg-[#CBCBCB]" ${{ onClick: () => this.post('profile.submitWork') }}>
                 <i class="nf nf-fa-plus"></i>
               </button>
             </div>
