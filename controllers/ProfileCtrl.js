@@ -76,7 +76,7 @@ class ProfileCtrl {
       let file = await selectFile('image/*');
       let [btn, detail] = await showModal(d.el(UploadDialog, { file }));
       if (btn !== 'ok') { return }
-      this.state.avatar = detail;
+      this.state.avatar = detail.replace('guiprav.com', 'imgix.net');
     },
 
     galleryUpload: async () => {
@@ -84,7 +84,7 @@ class ProfileCtrl {
       let [btn, detail] = await showModal(d.el(UploadDialog, { file }));
       if (btn !== 'ok') { return }
       this.state.gallery ??= [];
-      this.state.gallery.push(detail);
+      this.state.gallery.push(detail.replace('guiprav.com', 'imgix.net'));
     },
   };
 }

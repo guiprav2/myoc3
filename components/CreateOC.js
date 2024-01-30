@@ -37,9 +37,9 @@ class OCProfile {
             </div>
           </div>
         </div>
-        <div class="relative flex justify-center items-center aspect-square w-32 overflow-hidden mx-auto rounded-full bg-[#CBCBCB]">
+        <div class="relative flex justify-center items-center aspect-square w-32 overflow-hidden mx-auto mb-12 rounded-full bg-[#CBCBCB]">
           ${d.if(() => this.state.profile.avatar, d.html`
-            <img class="w-full h-full object-cover" ${{ src: () => this.state.profile.avatar }}>
+            <img class="w-full h-full object-cover" ${{ src: () => this.state.profile.avatar + '?w=400' }}>
             <button class="absolute left-0 right-0 top-0 bottom-0 w-full text-center text-neutral-200 bg-[#00000075] opacity-0 hover:opacity-100" ${{
               onClick: () => this.post('profile.avatarUpload'),
             }}>change</button>
@@ -85,7 +85,7 @@ class OCProfile {
             <div class="bg-[#FFA1C3] text-white px-4 py-1">Gallery</div>
             <div class="p-4 grid grid-cols-2 gap-1 md:grid-cols-4 lg:grid-cols-6">
               ${d.map(() => this.state.profile.gallery, x => d.html`
-                <img class="h-full aspect-square object-contain bg-[#CBCBCB]" ${{ src: x }}>
+                <img class="h-full aspect-square object-contain bg-[#CBCBCB]" ${{ src: x + '?w=400' }}>
               `)}
               <button class="flex justify-center items-center aspect-square text-white bg-[#CBCBCB]" ${{ onClick: () => this.post('profile.galleryUpload') }}>
                 <i class="nf nf-fa-plus"></i>

@@ -33,11 +33,11 @@ class OCProfile {
             </div>
           </div>
         </div>
-        <div class="aspect-square w-32 mx-auto rounded-full bg-[#CBCBCB] overflow-hidden">
-          ${d.if(() => this.state.profile.avatar, d.html`<img class="h-full object-cover" ${{ src: () => this.state.profile.avatar }}>`)}
+        <div class="aspect-square w-32 mx-auto mb-12 rounded-full bg-[#CBCBCB] overflow-hidden">
+          ${d.if(() => this.state.profile.avatar, d.html`<img class="w-full h-full object-cover" ${{ src: () => this.state.profile.avatar }}>`)}
         </div>
         ${d.if(() => this.state.profile.story, d.html`
-          <div class="m-4">
+          <div class="m-4 mt-0">
             <div class="text-[#2D2829] border-b border-[#E3D9D9BD] pb-1">Story</div>
             <div class="mt-3 text-[#454545] mx-3">${d.text(() => this.state.profile.story)}</div>
             <button class="block nf nf-fa-chevron_down mx-auto w-min text-[#FA3973] mt-2 mb-8"></button>
@@ -70,7 +70,7 @@ class OCProfile {
             <div class="bg-[#FFA1C3] text-white px-4 py-1">Gallery</div>
             <div class="p-4 grid grid-cols-2 gap-1 md:grid-cols-4 lg:grid-cols-6">
               ${d.map(() => this.state.profile.gallery, x => d.html`
-                <img class="h-full aspect-square object-contain bg-[#CBCBCB]" ${{ src: x }}>
+                <img class="w-full h-full aspect-square object-cover bg-[#CBCBCB]" ${{ src: x + '?w=400' }}>
               `)}
             </div>
           </div>
