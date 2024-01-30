@@ -93,6 +93,7 @@ app.put('/oc-profiles/:id', async (req, res) => {
 
   for (let x of oldGallery) {
     if (updatedGallery.find(y => y.url === x.url)) { continue }
+    await LikeService.remove(null, { query: { imgUrl: x.url } });
     await FeedService.remove(null, { query: { imgUrl: x.url } });
   }
 
@@ -109,6 +110,7 @@ app.delete('/oc-profiles/:id', async (req, res) => {
   let deleted = await OCProfileService.remove(req.params.id);
 
   for (let x of deleted.gallery || []) {
+    await LikeService.remove(null, { query: { imgUrl: x.url } });
     await FeedService.remove(null, { query: { imgUrl: x.url } });
   }
 

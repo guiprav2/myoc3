@@ -1,4 +1,5 @@
 import AuthCtrl from './AuthCtrl.js';
+import HomeCtrl from './HomeCtrl.js';
 import ProfileCtrl from './ProfileCtrl.js';
 import SubmitWorkCtrl from './SubmitWorkCtrl.js';
 import UploadCtrl from './UploadCtrl.js';
@@ -9,6 +10,7 @@ let state = {};
 
 let sections = {
   auth: new AuthCtrl(),
+  home: new HomeCtrl(post),
   profile: new ProfileCtrl(post),
   upload: new UploadCtrl(post),
   submitWork: new SubmitWorkCtrl(post),
