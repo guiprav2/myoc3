@@ -85,7 +85,9 @@ class OCProfile {
               ${d.map(() => this.state.profile.gallery, x => d.html`
                 <img class="h-full aspect-square object-contain bg-[#CBCBCB]" ${{ src: x }}>
               `)}
-              <button class="flex justify-center items-center aspect-square text-white bg-[#CBCBCB]"><i class="nf nf-fa-plus"></i></button>
+              <button class="flex justify-center items-center aspect-square text-white bg-[#CBCBCB]" ${{ onClick: () => this.post('profile.galleryUpload') }}>
+                <i class="nf nf-fa-plus"></i>
+              </button>
             </div>
           </div>
         `)}

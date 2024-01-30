@@ -1,4 +1,6 @@
+import UploadDialog from '../components/dialogs/UploadDialog.js';
 import rprofiles from '../repositories/ProfileRepository.js';
+import { selectFile, showModal } from '../other/util.js';
 
 class ProfileCtrl {
   state = {
@@ -59,6 +61,14 @@ class ProfileCtrl {
     },
 
     createGallery: () => this.state.gallery = [],
+
+    galleryUpload: async () => {
+      let file = await selectFile('image/*');
+      let [btn, detail] = await showModal(d.el(UploadDialog, { file }));
+      if (btn !== 'ok') { return }
+      this.state.gallery ??= [];
+      this.state.gallery.push(detail);
+    },
   };
 }
 
