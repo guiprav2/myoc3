@@ -1,4 +1,5 @@
 import AuthCtrl from './AuthCtrl.js';
+import ProfileCtrl from './ProfileCtrl.js';
 import d from '../other/dominant.js';
 import debounce from 'https://cdn.skypack.dev/debounce';
 
@@ -6,6 +7,7 @@ let state = {};
 
 let sections = {
   auth: new AuthCtrl(),
+  profile: new ProfileCtrl(),
 };
 
 for (let [k, v] of Object.entries(sections)) { state[k] = v.state }

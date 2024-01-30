@@ -1,10 +1,16 @@
+import CreateOC from './CreateOC.js';
+import OCProfile from './OCProfile.js';
 import SignIn from './SignIn.js';
 import SignUp from './SignUp.js';
 import Welcome from './Welcome.js';
 import d from '../other/dominant.js';
+import useCtrl from '../controllers/useCtrl.js';
 
 class App {
   constructor() {
+    window.app = this;
+    let [state, post] = useCtrl();
+    Object.assign(this, { state, post });
     this.updateRouter();
 
     let self = this;
@@ -27,8 +33,8 @@ class App {
       case 'sign-up': this.content = d.el(SignUp); break;
       //case 'home': this.content = d.el(Home); break;
       //case 'my-oc': this.content = d.el(MyOC); break;
-      //case 'oc': this.content = d.el(OC); break;
-      //case 'create-oc': this.content = d.el(CreateOC); break;
+      case 'oc-profile': this.content = d.el(OCProfile); break;
+      case 'create-oc': this.content = d.el(CreateOC); break;
       //case 'submit-work': this.content = d.el(SubmitWork); break;
     }
 
