@@ -41,6 +41,14 @@ class Home {
           onClick: () => this.post('home.changeTab', 'gallery'),
         }}>Gallery</button>
       </div>
+      ${d.if(() => !this.state.home.list.length, d.html`
+        <div class="text-center px-4 py-24 font-neutral-400">
+          <div class="nf nf-md-delete_empty w-min inline font-5xl"></div>
+          <div class="mt-4 italic">
+            Nothing to see here yet.
+          </div>
+        </div>
+      `)}
       <div class="grid grid-cols-2 p-4 gap-1 md:grid-cols-4">
         ${d.map(() => this.state.home.list, x => d.html`
           <div class="aspect-square bg-[#CBCBCB] relative flex flex-col justify-center">

@@ -1,6 +1,6 @@
 import AuthCtrl from './AuthCtrl.js';
 import HomeCtrl from './HomeCtrl.js';
-import ProfileCtrl from './ProfileCtrl.js';
+import OCProfileCtrl from './OCProfileCtrl.js';
 import SubmitWorkCtrl from './SubmitWorkCtrl.js';
 import UploadCtrl from './UploadCtrl.js';
 import d from '../other/dominant.js';
@@ -11,9 +11,9 @@ let state = {};
 let sections = {
   auth: new AuthCtrl(),
   home: new HomeCtrl(post),
-  profile: new ProfileCtrl(post),
-  upload: new UploadCtrl(post),
+  ocProfile: new OCProfileCtrl(post),
   submitWork: new SubmitWorkCtrl(post),
+  upload: new UploadCtrl(post),
 };
 
 for (let [k, v] of Object.entries(sections)) { state[k] = v.state }

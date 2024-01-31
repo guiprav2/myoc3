@@ -8,7 +8,7 @@ class OCProfile {
 
     let url = new URL(location.href);
     this.id = url.searchParams.get('id');
-    post('profile.load', this.id);
+    post('ocProfile.load', this.id);
   }
 
   render = () => d.html`
@@ -24,7 +24,7 @@ class OCProfile {
             <button class="nf nf-md-magnify"></button>
           </div>
         </div>
-        <div class="text-center text-[#FF77A8] font-xl my-3">${d.text(() => this.state.profile.name || 'OC Name')}</div>
+        <div class="text-center text-[#FF77A8] font-xl my-3">${d.text(() => this.state.ocProfile.name || 'OC Name')}</div>
         <div class="w-min ml-auto mr-4 text-xl -mt-9 mb-3 text-[#A7A7A7] group relative">
           <button class="nf nf-md-dots_vertical"></button><div class="absolute pt-2 right-0 hidden group-hover:block">
             <div class="text-sm shadow-xl border border-[#00000010] bg-white rounded overflow-hidden whitespace-nowrap text-center">
@@ -34,42 +34,42 @@ class OCProfile {
           </div>
         </div>
         <div class="aspect-square w-32 mx-auto mb-12 rounded-full bg-[#CBCBCB] overflow-hidden">
-          ${d.if(() => this.state.profile.avatar, d.html`<img class="w-full h-full object-cover" ${{ src: () => this.state.profile.avatar }}>`)}
+          ${d.if(() => this.state.ocProfile.avatar, d.html`<img class="w-full h-full object-cover" ${{ src: () => this.state.ocProfile.avatar }}>`)}
         </div>
-        ${d.if(() => this.state.profile.story, d.html`
+        ${d.if(() => this.state.ocProfile.story, d.html`
           <div class="m-4 mt-0">
             <div class="text-[#2D2829] border-b border-[#E3D9D9BD] pb-1">Story</div>
-            <div class="mt-3 text-[#454545] mx-3">${d.text(() => this.state.profile.story)}</div>
+            <div class="mt-3 text-[#454545] mx-3">${d.text(() => this.state.ocProfile.story)}</div>
             <button class="block nf nf-fa-chevron_down mx-auto w-min text-[#FA3973] mt-2 mb-8"></button>
           </div>
         `)}
-        ${d.if(() => this.state.profile.bio && Object.values(this.state.profile.bio).some(Boolean), d.html`
+        ${d.if(() => this.state.ocProfile.bio && Object.values(this.state.ocProfile.bio).some(Boolean), d.html`
           <div>
             <div class="bg-[#FFA1C3] text-white px-4 py-1">Biographical Information</div>
             <div class="p-4 grid grid-cols-2 gap-2 text-sm">
-              ${d.map(() => Object.keys(this.state.profile.bio), x => d.if(() => this.state.profile.bio[x], d.html`
+              ${d.map(() => Object.keys(this.state.ocProfile.bio), x => d.if(() => this.state.ocProfile.bio[x], d.html`
                 <div>${x}:</div>
-                <div>${d.text(() => this.state.profile.bio[x])}</div>
+                <div>${d.text(() => this.state.ocProfile.bio[x])}</div>
               `))}
             </div>
           </div>
         `)}
-        ${d.if(() => this.state.profile.physical && Object.values(this.state.profile.physical).some(Boolean), d.html`
+        ${d.if(() => this.state.ocProfile.physical && Object.values(this.state.ocProfile.physical).some(Boolean), d.html`
           <div>
             <div class="bg-[#FFA1C3] text-white px-4 py-1">Physical Description</div>
             <div class="p-4 grid grid-cols-2 gap-2 text-sm">
-              ${d.map(() => Object.keys(this.state.profile.physical), x => d.if(() => this.state.profile.physical[x], d.html`
+              ${d.map(() => Object.keys(this.state.ocProfile.physical), x => d.if(() => this.state.ocProfile.physical[x], d.html`
                 <div>${x}:</div>
-                <div>${d.text(() => this.state.profile.physical[x])}</div>
+                <div>${d.text(() => this.state.ocProfile.physical[x])}</div>
               `))}
             </div>
           </div>
         `)}
-        ${d.if(() => this.state.profile.gallery && this.state.profile.gallery.length, d.html`
+        ${d.if(() => this.state.ocProfile.gallery && this.state.ocProfile.gallery.length, d.html`
           <div>
             <div class="bg-[#FFA1C3] text-white px-4 py-1">Gallery</div>
             <div class="p-4 grid grid-cols-2 gap-1 md:grid-cols-4 lg:grid-cols-6">
-              ${d.map(() => this.state.profile.gallery, x => d.html`
+              ${d.map(() => this.state.ocProfile.gallery, x => d.html`
                 <img class="w-full h-full aspect-square object-cover bg-[#CBCBCB]" ${{ src: x.url + '?w=400' }}>
               `)}
             </div>

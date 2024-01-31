@@ -51,12 +51,12 @@ app.post('/auth', async (req, res) => {
 let FeedModel = new NeDB({ filename: './data/feed.db', autoload: true });
 let FeedService = makeService({ Model: FeedModel, multi: true, whitelist: ['$exists', '$regex', '$size', '$elemMatch'] });
 
-app.get('/feed', async (req, res) => res.json(await FeedService.find()));
+app.get('/feed', async (req, res) => res.json((await FeedService.find()).reverse()));
 
 let LikeModel = new NeDB({ filename: './data/likes.db', autoload: true });
 let LikeService = makeService({ Model: LikeModel, multi: true, whitelist: ['$exists', '$regex', '$size', '$elemMatch'] });
 
-app.get('/likes/by/:id', async (req, res) => res.json(await LikeService.find({ query: { author: req.params.id } })));
+app.get('/likes/by/:id', async (req, res) => res.json((await LikeService.find({ query: { author: req.params.id } })).reverse()));
 app.post('/likes', async (req, res) => res.json(await LikeService.create(req.body)));
 app.delete('/likes/:id', async (req, res) => res.json(await LikeService.remove(req.params.id)));
 
