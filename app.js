@@ -48,6 +48,31 @@ app.post('/auth', async (req, res) => {
   res.send({ user, token });
 });
 
+let ProfileModel = new NeDB({ filename: './data/profiles.db', autoload: true });
+let ProfileService = makeService({ Model: ProfileModel, multi: true, whitelist: ['$exists', '$regex', '$size', '$elemMatch'] });
+
+app.get('/profiles', async (req, res) => {
+  let ocs = await ProfileService.find({ query: req.query });
+  res.json(ocs);
+});
+
+app.get('/profiles/:id', async (req, res) => {
+  let oc = await ProfileService.get(req.params.id);
+  res.json(oc);
+});
+
+app.post('/profiles', async (req, res) => {
+  //if (!req.user) { req.status(401); req.send({ error: 'Authorization required' }) }
+  let created = await ProfileService.create(req.body);
+  res.json(created);
+});
+
+app.put('/profiles/:id', async (req, res) => {
+  //if (!req.user) { req.status(401); req.send({ error: 'Authorization required' }) }
+  let updated = await ProfileService.update(req.params.id, req.body, { nedb: { upsert: true } });
+  res.json(updated);
+});
+
 let FeedModel = new NeDB({ filename: './data/feed.db', autoload: true });
 let FeedService = makeService({ Model: FeedModel, multi: true, whitelist: ['$exists', '$regex', '$size', '$elemMatch'] });
 

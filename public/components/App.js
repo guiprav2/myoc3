@@ -1,6 +1,8 @@
 import CreateOC from './CreateOC.js';
+import CreateProfile from './CreateProfile.js';
 import Home from './Home.js';
 import OCProfile from './OCProfile.js';
+import Profile from './Profile.js';
 import SignIn from './SignIn.js';
 import SignUp from './SignUp.js';
 import Welcome from './Welcome.js';
@@ -33,6 +35,8 @@ class App {
       case 'sign-in': this.content = d.el(SignIn); break;
       case 'sign-up': this.content = d.el(SignUp); break;
       case 'home': this.content = d.el(Home); break;
+      case 'profile': this.content = d.el(Profile); break;
+      case 'create-profile': this.content = d.el(CreateProfile); break;
       //case 'my-oc': this.content = d.el(MyOC); break;
       case 'oc-profile': this.content = d.el(OCProfile); break;
       case 'create-oc': this.content = d.el(CreateOC); break;

@@ -1,7 +1,7 @@
 import d from '../other/dominant.js';
 import useCtrl from '../controllers/useCtrl.js';
 
-class OCProfile {
+class CreateOC {
   constructor() {
     let [state, post] = useCtrl();
     Object.assign(this, { state, post });
@@ -128,4 +128,4 @@ class OCProfile {
   `;
 }
 
-export default OCProfile;
+export default CreateOC;
