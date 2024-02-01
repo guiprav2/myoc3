@@ -1,4 +1,4 @@
-class ProfileRepository {
+class OCProfileRepository {
   async fetch(url, opt) { return await fetch(`http://localhost:3001/${url}`, opt) }
 
   async load(x) {
@@ -19,4 +19,4 @@ class ProfileRepository {
   }
 }
 
-export default new ProfileRepository();
+export default new OCProfileRepository();

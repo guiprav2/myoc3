@@ -1,7 +1,7 @@
 import LoadingDialog from '../components/dialogs/LoadingDialog.js';
 import SubmitWorkDialog from '../components/dialogs/SubmitWorkDialog.js';
 import UploadDialog from '../components/dialogs/UploadDialog.js';
-import rprofiles from '../repositories/ProfileRepository.js';
+import rocProfiles from '../repositories/OCProfileRepository.js';
 import { selectFile, showModal } from '../other/util.js';
 
 class ProfileCtrl {
@@ -29,21 +29,21 @@ class ProfileCtrl {
     },
 
     load: async x => {
-      this.post('profile.reset');
+      this.post('ocProfile.reset');
       this.state.id = x;
       if (!x) { return }
 
       try {
         this.state.loading = true;
         showModal(d.el(LoadingDialog, { done: () => !this.state.loading }));
-        Object.assign(this.state, await rprofiles.load(x));
+        Object.assign(this.state, await rocProfiles.load(x));
       } finally {
         this.state.loading = false;
       }
     },
 
     save: async () => {
-      let res = await rprofiles.save(this.state.id, {
+      let res = await rocProfiles.save(this.state.id, {
         name: this.state.name,
         avatar: this.state.avatar,
         story: this.state.story,
