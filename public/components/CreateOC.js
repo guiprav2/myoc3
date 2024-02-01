@@ -7,8 +7,8 @@ class CreateOC {
     Object.assign(this, { state, post });
 
     let url = new URL(location.href);
-    this.id = url.searchParams.get('id');
-    this.id ? post('ocProfile.load', this.id) : post('ocProfile.reset');
+    let id = url.searchParams.get('id');
+    id ? post('ocProfile.load', id) : post('ocProfile.reset');
   }
 
   render = () => d.html`

@@ -2,22 +2,21 @@ import d from '../other/dominant.js';
 import useCtrl from '../controllers/useCtrl.js';
 
 class SignIn {
-  data = { email: '', password: '' };
-
   constructor() {
     let [state, post] = useCtrl();
     Object.assign(this, { state, post });
+    post('auth.reset');
   }
 
   onSubmit = ev => {
     ev.preventDefault();
-    this.post('auth.signIn', this.data);
+    this.post('auth.signIn');
   };
 
   render = () => d.html`
     <div class="flex flex-col justify-center items-center py-24 h-screen bg-[#F1F1F1]">
       <img class="w-64 -mt-24" src="images/myoc2.png">
-      <form ${{ onChange: ev => this.data[ev.target.name] = ev.target.value, onSubmit: this.onSubmit }}>
+      <form ${{ onChange: ev => this.state.auth[ev.target.name] = ev.target.value, onSubmit: this.onSubmit }}>
         ${d.if(() => this.state.auth.error, d.html`
           <div class="text-red-500 italic text-center mb-2">${d.text(() => this.state.auth.error)}</div>
         `)}

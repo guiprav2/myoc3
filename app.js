@@ -33,19 +33,20 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.post('/auth', async (req, res) => {
-  let matches = await UserService.find({ query: { name: req.body.name, password: req.body.password } });
-
-  if (!matches.length) {
-    res.status(401);
-    res.send({ error: 'Bad username or password' });
-    return;
-  }
-
-  let [user] = matches;
-  let token = jwt.sign({ id: user._id }, jwtSecret);
+app.post('/sign-up', async (req, res) => {
+  let existing = await UserService.find({ query: { email: req.body.email } });
+  if (existing.length) { res.status(409); res.send({ error: 'E-mail already in use.' }); return }
+  let user = await UserService.create(req.body);
   delete user.password;
-  res.send({ user, token });
+  res.json({ user, token: jwt.sign({ id: user._id }, jwtSecret) });
+});
+
+app.post('/auth', async (req, res) => {
+  let matches = await UserService.find({ query: { email: req.body.email, password: req.body.password } });
+  if (!matches.length) { res.status(401); res.send({ error: 'Wrong e-mail or password.' }); return }
+  let [user] = matches;
+  delete user.password;
+  res.send({ user, token: jwt.sign({ id: user._id }, jwtSecret) });
 });
 
 let ProfileModel = new NeDB({ filename: './data/profiles.db', autoload: true });
@@ -62,14 +63,18 @@ app.get('/profiles/:id', async (req, res) => {
 });
 
 app.post('/profiles', async (req, res) => {
-  //if (!req.user) { req.status(401); req.send({ error: 'Authorization required' }) }
-  let created = await ProfileService.create(req.body);
+  if (!req.user) { res.status(401); res.send({ error: 'Authorization required.' }); return }
+  let existing = await ProfileService.find({ query: { user: req.user._id } });
+  if (existing.length) { res.status(409); res.send({ error: 'Profile already exists.' }) }
+  let created = await ProfileService.create({ ...req.body, user: req.user._id });
   res.json(created);
 });
 
 app.put('/profiles/:id', async (req, res) => {
-  //if (!req.user) { req.status(401); req.send({ error: 'Authorization required' }) }
-  let updated = await ProfileService.update(req.params.id, req.body, { nedb: { upsert: true } });
+  if (!req.user) { res.status(401); res.send({ error: 'Authorization required.' }); return }
+  let existing = await ProfileService.get(req.params.id);
+  if (!existing || existing.user !== req.user._id) { res.status(401); res.send({ error: 'This profile does not belong to you.' }); return }
+  let updated = await ProfileService.update(req.params.id, { ...req.body, user: req.user._id });
   res.json(updated);
 });
 
@@ -99,20 +104,16 @@ app.get('/oc-profiles/:id', async (req, res) => {
 });
 
 app.post('/oc-profiles', async (req, res) => {
-  //if (!req.user) { req.status(401); req.send({ error: 'Authorization required' }) }
-  let created = await OCProfileService.create(req.body);
-
-  for (let x of created.gallery || []) {
-    await FeedService.create({ imgUrl: x.url, pageUrl: `/oc-profile?id=${created._id}` });
-  }
-
+  if (!req.user) { req.status(401); req.send({ error: 'Authorization required.' }) }
+  let created = await OCProfileService.create({ ...req.body, user: req.user._id });
+  for (let x of created.gallery || []) { await FeedService.create({ imgUrl: x.url, pageUrl: `/oc-profile?id=${created._id}`, user: req.user._id }) }
   res.json(created);
 });
 
 app.put('/oc-profiles/:id', async (req, res) => {
-  //if (!req.user) { req.status(401); req.send({ error: 'Authorization required' }) }
+  if (!req.user) { req.status(401); req.send({ error: 'Authorization required.' }) }
   let old = await OCProfileService.get(req.params.id);
-  let updated = await OCProfileService.update(req.params.id, req.body, { nedb: { upsert: true } });
+  let updated = await OCProfileService.update(req.params.id, { ...req.body, user: req.user._id }, { nedb: { upsert: true } });
   let oldGallery = old?.gallery || [];
   let updatedGallery = updated.gallery || [];
 
@@ -124,14 +125,14 @@ app.put('/oc-profiles/:id', async (req, res) => {
 
   for (let x of updatedGallery) {
     if (oldGallery.find(y => y.url === x.url)) { continue }
-    await FeedService.create({ imgUrl: x.url, pageUrl: `/oc-profile?id=${req.params.id}` });
+    await FeedService.create({ imgUrl: x.url, pageUrl: `/oc-profile?id=${req.params.id}`, user: req.user._id });
   }
 
   res.json(updated);
 });
 
 app.delete('/oc-profiles/:id', async (req, res) => {
-  //if (!req.user) { req.status(401); req.send({ error: 'Authorization required' }) }
+  if (!req.user) { req.status(401); req.send({ error: 'Authorization required.' }) }
   let deleted = await OCProfileService.remove(req.params.id);
 
   for (let x of deleted.gallery || []) {

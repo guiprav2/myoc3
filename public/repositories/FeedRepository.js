@@ -1,5 +1,10 @@
 class FeedRepository {
-  async fetch(url, opt) { return await fetch(`http://localhost:3001/${url}`, opt) }
+  async fetch(url, opt) {
+    return await fetch(`http://localhost:3001/${url}`, {
+      ...opt || {},
+      headers: { ...opt?.headers || {}, Authorization: localStorage.getItem('myoc.token') },
+    });
+  }
 
   async load() {
     let res = await this.fetch('feed');

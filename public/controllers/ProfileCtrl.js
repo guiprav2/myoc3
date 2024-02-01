@@ -70,7 +70,7 @@ class ProfileCtrl {
 
     createOc: async () => {
       await this.post('profile.save', false);
-      history.pushState(null, '', 'create-oc');
+      history.pushState(null, '', `create-oc?profileId=${this.state.id}`);
     },
   };
 }
