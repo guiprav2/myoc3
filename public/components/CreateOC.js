@@ -8,7 +8,8 @@ class CreateOC {
 
     let url = new URL(location.href);
     let id = url.searchParams.get('id');
-    id ? post('ocProfile.load', id) : post('ocProfile.reset');
+    let returnTo = url.searchParams.get('returnTo');
+    id ? post('ocProfile.load', id, returnTo) : post('ocProfile.reset', returnTo);
   }
 
   render = () => d.html`

@@ -13,18 +13,20 @@ class ProfileCtrl {
     bio: null,
     physical: null,
     gallery: null,
+    returnTo: null,
     loading: false,
   };
 
   constructor(post) { this.post = post }
 
   actions = {
-    reset: () => {
+    reset: returnTo => {
       this.state.id = null;
       this.state.name = '';
       this.state.avatar = null;
       this.state.story = '';
       this.state.bio = this.state.physical = this.state.gallery = null;
+      this.state.returnTo = returnTo;
       this.state.loading = false;
     },
 
@@ -53,10 +55,10 @@ class ProfileCtrl {
       });
 
       if (!this.state.id) { this.state.id = res._id }
-      history.pushState(null, '', `oc-profile?id=${this.state.id}`);
+      history.pushState(null, '', this.state.returnTo || `oc-profile?id=${this.state.id}`);
     },
 
-    cancelEdit: () => history.pushState(null, '', `oc-profile?id=${this.state.id}`),
+    cancelEdit: () => history.pushState(null, '', this.state.returnTo || `oc-profile?id=${this.state.id}`),
 
     createBio: () => {
       this.state.bio = {

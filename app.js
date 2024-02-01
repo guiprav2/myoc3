@@ -53,13 +53,14 @@ let ProfileModel = new NeDB({ filename: './data/profiles.db', autoload: true });
 let ProfileService = makeService({ Model: ProfileModel, multi: true, whitelist: ['$exists', '$regex', '$size', '$elemMatch'] });
 
 app.get('/profiles', async (req, res) => {
-  let ocs = await ProfileService.find({ query: req.query });
-  res.json(ocs);
+  let profiles = await ProfileService.find({ query: req.query });
+  res.json(profiles);
 });
 
 app.get('/profiles/:id', async (req, res) => {
-  let oc = await ProfileService.get(req.params.id);
-  res.json(oc);
+  let profile = await ProfileService.get(req.params.id);
+  profile.ocProfiles = await OCProfileService.find({ query: { user: profile.user }});
+  res.json(profile);
 });
 
 app.post('/profiles', async (req, res) => {

@@ -69,7 +69,9 @@ class CreateProfile {
             <div class="grid grid-cols-3 mt-3 gap-4 md:grid-cols-6 lg:grid-cols-8">
               ${d.map(() => this.state.profile.ocProfiles, x => d.html`
                 <div class="flex flex-col">
-                  <div class="aspect-square rounded-full bg-[#CBCBCB] mb-2"></div>
+                  <div class="aspect-square rounded-full bg-[#CBCBCB] mb-2 overflow-hidden">
+                    <img class="w-full h-full object-cover" ${{ src: x.avatar }}>
+                  </div>
                   <div class="text-[#FF77A8] text-center">${d.text(() => x.name)}</div>
                 </div>
               `)}
